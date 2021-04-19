@@ -1,0 +1,9 @@
+.house-list-title {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.house-list {
+    list-style: none;
+}

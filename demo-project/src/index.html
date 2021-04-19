@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .form-error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="" id="add-case-form">
+        <input type="text" name="case-title" placeholder="Название дела">
+        <button type="submit">Добавить дело</button>
+    </form>
+    
+    <ul id="case-list"></ul>
+    <script>
+        const caseAddForm = document.getElementById("add-case-form");
+        const caseList = document.getElementById("case-list");
+
+        caseAddForm.addEventListener("submit", function(e){
+            e.preventDefault();
+            const {value} = this.querySelector("[name=case-title]");
+            if(value){
+                const caseElement = createCase(value);
+                caseList.append(caseElement);
+                this.reset();
+            }
+            else {
+                const caseError = createFormError("Нужно ввести название дела");
+                this.querySelector("[name=case-title]").after(caseError);
+            }
+        });
+
+        function createCase(name){
+            const elem = document.createElement("li");
+            elem.className = "case-item";
+            elem.insertAdjacentHTML("beforeend", `${name} <span class="delete-case">X</span>`);
+            const deleteCaseButton = elem.querySelector(".delete-case");
+            deleteCaseButton.addEventListener("click", deleteCase)
+            return elem;
+        }
+
+        function createFormError(errorText){
+            const elem = document.createElement("p");
+            elem.className = "form-error";
+            elem.textContent = errorText;
+            return elem;
+        }
+
+        function deleteCase(e){
+            e.preventDefault();
+            const caseElem = this.closest("li");
+            caseElem.remove();
+        }
+    </script>
+</body>
+</html>
